@@ -18,7 +18,7 @@ var rminsCmd = &cobra.Command{
 	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 1 {
-			fmt.Println("Too many arguments. Add one hostname at a time")
+			fmt.Println("Too many arguments. Remove one hostname at a time")
 		} else {
 			daemonfile, _ := cmd.Flags().GetString("daemon-file")
 			hostname := args[0]
@@ -26,7 +26,7 @@ var rminsCmd = &cobra.Command{
 			if port != 0 {
 				hostname = fmt.Sprintf("%v:%v", hostname, port)
 			}
-			fmt.Printf("Adding registry %v to %v... \n", hostname, daemonfile)
+			fmt.Printf("Removing registry %v from %v... \n", hostname, daemonfile)
 			err := dutil.RemoveInsecure(daemonfile, hostname)
 			if err != nil {
 				fmt.Println(err)
