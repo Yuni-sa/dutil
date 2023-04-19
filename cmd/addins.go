@@ -17,8 +17,6 @@ var addinsCmd = &cobra.Command{
 	Short: "Add an insecure registry",
 	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
-		//fmt.Println("Add an insecure registry in /etc/docker/daemon.json")
-		//fmt.Println("Or where the users configured")
 		if len(args) > 1 {
 			fmt.Println("Too many arguments. Add one hostname at a time")
 		} else {
@@ -28,11 +26,12 @@ var addinsCmd = &cobra.Command{
 			if port != 0 {
 				hostname = fmt.Sprintf("%v:%v", hostname, port)
 			}
+			fmt.Printf("Adding registry %v to %v... \n", hostname, daemonfile)
 			err := addins.AddInsecure(daemonfile, hostname)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("Insecure registry successfully added")
+				fmt.Println("Insecure registry successfully added, Please restart the docker service.")
 			}
 
 		}
