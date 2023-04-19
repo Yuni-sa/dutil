@@ -2,5 +2,5 @@
   "000.from": "https://github.com/docker/cli/blob/master/cli/config/configfile/file.go",
   "HttpHeaders": {"redacted": "redacted"},
   "auths": {"redacted": "redacted"},
-  "insecure-registries":["test","test:5"]
+  "insecure-registries":[]
 }

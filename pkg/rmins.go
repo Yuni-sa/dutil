@@ -54,15 +54,20 @@ func RemoveInsecure(daemonfile, hostname string) error {
 	// Get the registry list
 	//value, _, _, err := jsonparser.Get(file, "insecure-registries")
 
-	// Marshal the new registry list
-	registryBytes, _ := json.Marshal(registries)
-
-	// Set the new registry list
-	file, err = jsonparser.Set(file, registryBytes, "insecure-registries")
-	if err != nil {
-		return err
+	if len(registries) != 0 {
+		// Marshal the new registry list
+		registryBytes, _ := json.Marshal(registries)
+		// Set the new registry list
+		file, err = jsonparser.Set(file, registryBytes, "insecure-registries")
+		if err != nil {
+			return err
+		}
+	} else {
+		file, err = jsonparser.Set(file, []byte("[]"), "insecure-registries")
+		if err != nil {
+			return err
+		}
 	}
-
 	// Finally make the changes to the file
 	if err = os.WriteFile(daemonfile, file, 0644); err != nil {
 		return err
