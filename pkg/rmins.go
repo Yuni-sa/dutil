@@ -11,7 +11,7 @@ import (
 	"github.com/buger/jsonparser"
 )
 
-func AddInsecure(daemonfile, hostname string) error {
+func RemoveInsecure(daemonfile, hostname string) error {
 	// Declare registry list
 	var registries []string
 
@@ -39,22 +39,20 @@ func AddInsecure(daemonfile, hostname string) error {
 			fmt.Println(err)
 			return
 		}
-		if string(value) == hostname {
-			err = fmt.Errorf("hostname already exists")
-			fmt.Println(err)
-			os.Exit(0)
+		// Skip hostname
+		if string(value) != hostname {
+			// Add it to registry list
+			registries = append(registries, string(value))
 		}
-
-		// Add it to registry list
-		registries = append(registries, string(value))
 	}, "insecure-registries"); err != nil {
 		return err
 	}
+
+	//err = fmt.Errorf("hostname does not exist")
+	//fmt.Println(err)
+	//os.Exit(0)
 	// Get the registry list
 	//value, _, _, err := jsonparser.Get(file, "insecure-registries")
-
-	// Add the new registry
-	registries = append(registries, hostname)
 
 	// Marshal the new registry list
 	registryBytes, _ := json.Marshal(registries)

@@ -1,5 +1,5 @@
 /*
-Copyright © 2023 Yonatan Sasson <yonatanxd72@gmail.com>
+Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
 package cmd
 
@@ -11,10 +11,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// addinsCmd represents the addins command
-var addinsCmd = &cobra.Command{
-	Use:   "addins",
-	Short: "Add an insecure registry",
+// rminsCmd represents the rmins command
+var rminsCmd = &cobra.Command{
+	Use:   "rmins",
+	Short: "Remove insecure registry",
 	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) > 1 {
@@ -27,11 +27,11 @@ var addinsCmd = &cobra.Command{
 				hostname = fmt.Sprintf("%v:%v", hostname, port)
 			}
 			fmt.Printf("Adding registry %v to %v... \n", hostname, daemonfile)
-			err := dutil.AddInsecure(daemonfile, hostname)
+			err := dutil.RemoveInsecure(daemonfile, hostname)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("Insecure registry successfully added, Please restart the docker service.")
+				fmt.Println("Insecure registry successfully removed, Please restart the docker service.")
 			}
 
 		}
@@ -39,16 +39,16 @@ var addinsCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(addinsCmd)
+	rootCmd.AddCommand(rminsCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	addinsCmd.PersistentFlags().StringP("daemon-file", "f", "/etc/docker/daemon.json", "A custom daemon.json file path other than /etc/docker/daemon.json")
-	addinsCmd.PersistentFlags().Uint16P("port", "p", 0, "A custom port to access the registry")
+	rminsCmd.PersistentFlags().StringP("daemon-file", "f", "/etc/docker/daemon.json", "A custom daemon.json file path other than /etc/docker/daemon.json")
+	rminsCmd.PersistentFlags().Uint16P("port", "p", 0, "A custom port to access the registry")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// addinsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rminsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
