@@ -24,6 +24,10 @@ var addinsCmd = &cobra.Command{
 		} else {
 			daemonfile, _ := cmd.Flags().GetString("daemon-file")
 			hostname := args[0]
+			port, _ := cmd.Flags().GetUint16("port")
+			if port != 0 {
+				hostname = fmt.Sprintf("%v:%v", hostname, port)
+			}
 			err := addins.AddInsecure(daemonfile, hostname)
 			if err != nil {
 				fmt.Println(err)
@@ -42,7 +46,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	addinsCmd.PersistentFlags().String("daemon-file", "/etc/docker/daemon.json", "A custom daemon.json file path other than /etc/docker/daemon.json")
+	addinsCmd.PersistentFlags().StringP("daemon-file", "f", "/etc/docker/daemon.json", "A custom daemon.json file path other than /etc/docker/daemon.json")
+	addinsCmd.PersistentFlags().Uint16P("port", "p", 0, "A custom port to access the registry")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
