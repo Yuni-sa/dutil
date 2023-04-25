@@ -35,9 +35,10 @@ var rminsCmd = &cobra.Command{
 	Short: "Remove insecure registry",
 	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) > 1 {
-			fmt.Println("Too many arguments. Remove one hostname at a time")
-		} else {
+		switch len(args) {
+		case 0:
+			fmt.Println("Not enough arguments. Specify a registry to Remove.")
+		case 1:
 			daemonfile, _ := cmd.Flags().GetString("daemon-file")
 			hostname := args[0]
 			port, _ := cmd.Flags().GetUint16("port")
@@ -51,7 +52,8 @@ var rminsCmd = &cobra.Command{
 			} else {
 				fmt.Println("Insecure registry successfully removed, Please restart the docker service.")
 			}
-
+		default:
+			fmt.Println("Too many arguments. Remove one hostname at a time")
 		}
 	},
 }
