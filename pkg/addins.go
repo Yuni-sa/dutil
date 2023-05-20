@@ -60,7 +60,7 @@ func AddInsecure(daemonfile, hostname string) error {
 		if string(value) == hostname {
 			err = fmt.Errorf("hostname already exists")
 			fmt.Println(err)
-			os.Exit(0)
+			return
 		}
 
 		// Add it to registry list
