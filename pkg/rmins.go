@@ -66,12 +66,6 @@ func RemoveInsecure(daemonfile, hostname string) error {
 		return err
 	}
 
-	//err = fmt.Errorf("hostname does not exist")
-	//fmt.Println(err)
-	//os.Exit(0)
-	// Get the registry list
-	//value, _, _, err := jsonparser.Get(file, "insecure-registries")
-
 	if len(registries) != 0 {
 		// Marshal the new registry list
 		registryBytes, _ := json.Marshal(registries)

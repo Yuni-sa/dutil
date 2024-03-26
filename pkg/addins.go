@@ -68,8 +68,6 @@ func AddInsecure(daemonfile, hostname string) error {
 	}, "insecure-registries"); err != nil {
 		return err
 	}
-	// Get the registry list
-	//value, _, _, err := jsonparser.Get(file, "insecure-registries")
 
 	// Add the new registry
 	registries = append(registries, hostname)
